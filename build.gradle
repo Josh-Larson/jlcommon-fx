@@ -61,53 +61,45 @@ artifacts {
 	archives javadocJar
 }
 
-def pomConfig = {
-	licenses {
-		license {
-			name "The MIT License"
-			url "https://opensource.org/licenses/MIT"
-			distribution "repo"
-		}
-	}
-	developers {
-		developer {
-			id "josh-larson"
-			name "Josh Larson"
-			email "joshua-github@ourclan.net"
-		}
-	}
-	
-	scm {
-		url "https://github.com/Josh-Larson/jlcommon-fx"
-	}
-}
-
-
 // Create the publication with the pom configuration:
 publishing {
 	publications {
-		jlcommonfx(MavenPublication) {
+		jlcommon(MavenPublication) {
 			from components.java
 			artifact sourcesJar
 			artifact javadocJar
-			groupId projectGroup
-			artifactId projectName
+			groupId = projectGroup
+			artifactId = projectName
 			version projectVersion
-			pom.withXml {
-				def root = asNode()
-				root.appendNode('description', 'Common JavaFX Library')
-				root.appendNode('name', 'Common JavaFX Library')
-				root.appendNode('url', 'https://github.com/Josh-Larson/jlcommon-fx')
-				root.children().last() + pomConfig
+			pom {
+				name = 'jlcommon-fx'
+				description = 'A Common JavaFX Library'
+				url = 'https://github.com/Josh-Larson/jlcommon-fx'
+				licenses {
+					license {
+						name = 'The MIT License'
+						url = 'https://opensource.org/licenses/MIT'
+					}
+				}
+				developers {
+					developer {
+						id = 'Josh-Larson'
+						name = 'Josh Larson'
+						email = 'joshua-github@ourclan.net'
+					}
+				}
+				scm {
+					url = 'https://github.com/Josh-Larson/jlcommon-fz'
+				}
 			}
 		}
 	}
 }
 
 bintray {
-	user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-	key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-	publications = ['jlcommonfx']
+	user ((String) (project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')))
+	key ((String) (project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')))
+	publications 'jlcommonfx'
 	pkg {
 		repo = 'jlcommon'
 		name = projectName
