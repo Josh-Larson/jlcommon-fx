@@ -1,0 +1,4 @@
+<?import javafx.scene.layout.VBox?>
+<VBox fx:controller="me.joshlarson.jlcommon.javafx.control.TestController3" xmlns:fx="http://javafx.com/fxml">
+	<fx:include source="test1.fxml" />
+</VBox>
